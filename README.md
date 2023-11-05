@@ -1,5 +1,36 @@
 # GERTECH
-diagrama de classes,
+
+Tecnologias Utilizadas
+Linguagem de Programação: Python
+Framework Web: Flask
+Banco de Dados: SQLAlchemy 
+Front-End: HTML, CSS, Bootstrap
+JavaScript
+ 
+Funcionalidades
+Para Usuários
+Cadastro e autenticação de contas.
+Navegação e busca de cursos.
+Acesso a material educacional (vídeos, documentos, quizzes, etc.).
+Progresso do curso e histórico de conclusão.
+Perfil de usuário com informações pessoais.
+Para Empresas
+Cadastro de conta de empresa.
+Atribuição de cursos aos funcionários.
+Monitoramento do progresso dos funcionários nos cursos.
+Acesso a relatórios e métricas de aprendizado.
+Para Administradores
+Gerenciamento de cursos (criação, edição, exclusão).
+Gerenciamento de contas de empresa.
+Administração de contas de usuário e administrador.
+Geração de relatórios abrangentes.
+
+Instalação e Execução
+Crie um ambiente virtual: python -m venv venv
+Ative o ambiente virtual:venv\Scripts\activate (Windows)
+Instale as dependências: pip install -r requirements.txt
+Configure suas variáveis de ambiente em um arquivo .env.
+
 estrutura:
 GERTECH/
     ├── app/
@@ -67,9 +98,6 @@ GERTECH/
     ├── models.py
     ├── forms.py
     ├── requirements.txt
-
-fazer documentação completa do site
-
 
 
 ![gertech_](https://github.com/adriele07/GERTECH/assets/118401626/9ce3733e-b12e-4207-a256-5cc4feae3abc)
