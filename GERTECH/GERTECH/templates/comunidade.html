@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunidade - Meu Site</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Bem-vindo à Comunidade</h1>
+        <p>Compartilhe suas ideias e experiências com outros membros da comunidade.</p>
+    </header>
+    <section id="post-form">
+        <h2>Faça uma Postagem</h2>
+        <form action="/adicionar_postagem" method="post">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+            <label for="titulo">Título da Postagem:</label>
+            <input type="text" id="titulo" name="titulo" required>
+            <label for="conteudo">Conteúdo da Postagem:</label>
+            <textarea id="conteudo" name="conteudo" rows="4" required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+    <section id="postagens">
+        <h2>Últimas Postagens</h2>
+        <div class="postagem">
+            <h3>Título da Postagem 1</h3>
+            <p>Aqui está o conteúdo da primeira postagem na comunidade. Lorem ipsum...</p>
+            <p>Por: Nome do Autor</p>
+        </div>
+        <div class="postagem">
+            <h3>Título da Postagem 2</h3>
+            <p>Aqui está o conteúdo da segunda postagem na comunidade. Lorem ipsum...</p>
+            <p>Por: Nome do Autor</p>
+        </div>
+        <!-- Repita o formato acima para cada postagem -->
+    </section>
+</body>
+</html>
