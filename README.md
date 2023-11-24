@@ -1,5 +1,43 @@
 # GERTECH
 
+
+
+
+USE gertech_db;
+
+-- Tabela para Funcionário
+CREATE TABLE employees (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    position VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+-- Tabela para Administrador
+CREATE TABLE admins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+-- Tabela para Empresa
+CREATE TABLE companies (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    social_name VARCHAR(255) NOT NULL,
+    cnpj VARCHAR(14) NOT NULL,
+    sector VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    website VARCHAR(255) NOT NULL,
+    logo_url VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL
+);
+
+
 Tecnologias Utilizadas
 Linguagem de Programação: Python
 Framework Web: Flask
