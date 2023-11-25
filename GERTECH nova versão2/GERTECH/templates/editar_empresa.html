@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="C:\Users\informatica\Desktop\tcc project\GERTECH nova versão - Copia\Captura de tela 2023-11-25 145533.png">
+      
+    <title>Editar Empresa</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4 mb-4">Editar Empresa</h1>
+        <form method="post" action="/editar_empresa/{{ empresa.id }}">
+
+            <div class="mb-3">
+                <label for="companyName" class="form-label">Nome da Empresa:</label>
+                <input type="text" class="form-control" id="companyName" name="companyName" value="{{ empresa.nome_empresa }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="companyLegalName" class="form-label">Razão Social:</label>
+                <input type="text" class="form-control" id="companyLegalName" name="companyLegalName" value="{{ empresa.razao_social }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="companyCnpj" class="form-label">CNPJ:</label>
+                <input type="text" class="form-control" id="companyCnpj" name="companyCnpj" value="{{ empresa.cnpj }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="companySector" class="form-label">Setor de Atuação:</label>
+                <input type="text" class="form-control" id="companySector" name="companySector" value="{{ empresa.setor_atuacao }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="companyAddress" class="form-label">Endereço Comercial:</label>
+                <input type="text" class="form-control" id="companyAddress" name="companyAddress" value="{{ empresa.endereco_comercial }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="companyEmail" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="companyEmail" name="companyEmail" value="{{ empresa.email }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="companyPassword" class="form-label">Senha:</label>
+                <input type="password" class="form-control" id="companyPassword" name="companyPassword" value="{{ empresa.senha }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="companyWebsite" class="form-label">Site da Empresa:</label>
+                <input type="text" class="form-control" id="companyWebsite" name="companyWebsite" value="{{ empresa.site_empresa }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="companyLogo" class="form-label">Logo da Empresa (URL):</label>
+                <input type="text" class="form-control" id="companyLogo" name="companyLogo" value="{{ empresa.logo_empresa }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="companyDescription" class="form-label">Descrição da Empresa:</label>
+                <textarea class="form-control" id="companyDescription" name="companyDescription" rows="3" required>{{ empresa.descricao_empresa }}</textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

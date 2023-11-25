@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="C:\Users\informatica\Desktop\tcc project\GERTECH nova versão - Copia\Captura de tela 2023-11-25 145533.png">
+      
+    <title>Comunidade Chat</title>
+    <style>
+        body {
+            font-family: 'Helvetica', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #chat-container {
+            width: 100%; /* Set the width to 80% */
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #messages {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            overflow-y: auto;
+            max-height: 300px;
+            background-color: #fff;
+            padding: 10px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            word-wrap: break-word;
+            max-width: 70%;
+            position: relative;
+        }
+
+        .my-message {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+        }
+
+        .other-message {
+            background-color: #ffffff;
+            align-self: flex-start;
+        }
+
+        #input-container {
+            display: flex;
+            background-color: #fff;
+            padding: 10px;
+            align-items: center;
+            border-top: 1px solid #ccc;
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        #message-input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        #send-button {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #00008B;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        /* Adicionando estilos para a sobreposição de membros */
+        #members-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        #members-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        #close-button {
+            background-color: #00008B;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #view-members-button {
+            padding: 10px;
+            background-color: #00008B;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #view-members-button:hover {
+            background-color: #128C7E; /* Altere a cor quando o mouse estiver sobre o botão */
+        }
+
+        /* Adicionando estilos para o botão de apagar */
+        .delete-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #ff5757;
+            color: #fff;
+            border: none;
+            padding: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div id="chat-container">
+    <ul id="messages"></ul>
+    <div id="input-container">
+        <label for="file-input">&#128247;</label>
+        <input type="file" id="file-input" accept="image/*">
+        <input type="text" id="message-input" placeholder="Digite sua mensagem...">
+        <button id="send-button" onclick="sendMessage()">Enviar</button>
+        <button id="view-members-button" onclick="openMembersOverlay()">Ver Membros</button>
+    </div>
+</div>
+
+<div id="members-overlay">
+    <div id="members-container">
+        <h2>Membros</h2>
+        <p>Adriele</p>
+        <p>Alice</p>
+        <p>Ana Luz</p>
+        <p>Ana Sarah</p>
+        <p>Giovanna</p>
+        <p>Henrique</p>
+        <button id="close-button" onclick="closeMembersOverlay()">Fechar</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        loadMessages();
+    });
+
+    function loadMessages() {
+        const messagesContainer = document.getElementById('messages');
+        const messages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+
+        messages.forEach(message => {
+            renderMessage(message);
+        });
+    }
+
+    function sendMessage() {
+        const messageInput = document.getElementById('message-input');
+        const fileInput = document.getElementById('file-input');
+
+        let messageContent = messageInput.value.trim();
+
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const message = { type: 'image', content: e.target.result, sender: 'me' };
+                renderMessage(message);
+                saveMessage(message);
+                addDeleteButton();
+            };
+
+            reader.readAsDataURL(file);
+
+            // Clear file input
+            fileInput.value = '';
+            messageContent = ''; // Set message content to empty when an image is sent
+        }
+
+        if (messageContent !== '') {
+            const message = { type: 'text', content: messageContent, sender: 'me' };
+            renderMessage(message);
+            saveMessage(message);
+            addDeleteButton();
+            // Clear the input field
+            messageInput.value = '';
+        }
+    }
+
+    function renderMessage(message) {
+        const messagesContainer = document.getElementById('messages');
+        const li = document.createElement('li');
+        li.classList.add('message');
+
+        if (message.type === 'text') {
+            li.textContent = message.content;
+        } else if (message.type === 'image') {
+            const img = document.createElement('img');
+            img.src = message.content;
+            img.style.maxWidth = '100%';
+            li.appendChild(img);
+        }
+
+        if (message.sender === 'me') {
+            li.classList.add('my-message');
+        } else {
+            li.classList.add('other-message');
+        }
+
+        messagesContainer.appendChild(li);
+    }
+
+    function saveMessage(message) {
+        const messages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+        messages.push(message);
+        localStorage.setItem('chatMessages', JSON.stringify(messages));
+    }
+
+    function openMembersOverlay() {
+        const membersOverlay = document.getElementById('members-overlay');
+        membersOverlay.style.display = 'flex';
+    }
+
+    function closeMembersOverlay() {
+        const membersOverlay = document.getElementById('members-overlay');
+        membersOverlay.style.display = 'none';
+    }
+
+    function addDeleteButton() {
+        const messagesContainer = document.getElementById('messages');
+        const messages = messagesContainer.getElementsByClassName('message');
+
+        if (messages.length > 0) {
+            const lastMessage = messages[messages.length - 1];
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Apagar';
+            deleteButton.className = 'delete-button';
+            deleteButton.onclick = function () {
+                deleteMessage(lastMessage);
+            };
+
+            lastMessage.appendChild(deleteButton);
+        }
+    }
+
+    function deleteMessage(messageElement) {
+        // Remove visualmente a mensagem
+        messageElement.remove();
+
+        // Remove a mensagem dos dados armazenados localmente
+        const messages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+        messages.pop();
+        localStorage.setItem('chatMessages', JSON.stringify(messages));
+    }
+
+    
+</script>
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="C:\Users\informatica\Desktop\tcc project\GERTECH nova versão - Copia\Captura de tela 2023-11-25 145533.png">
+      
+    <title>Criação de Cursos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #00008B;
+            padding: 10px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #fff;
+            margin: 0;
+        }
+
+        form, .curso {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .curso {
+            display: none;
+        }
+
+        .modulo {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 15px;
+            color: #00008B;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        textarea, input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #00008B;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color:#00008B;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Formulário de Criação de Cursos</h1>
+    </header>
+
+    <form id="cursoForm">
+
+        <div class="modulo">
+            <!-- Módulo 1 -->
+            <h2>Módulo 1: Introdução</h2>
+            <label for="apresentacao">Apresentação do Curso:</label>
+            <textarea id="apresentacao" name="apresentacao" rows="4" cols="50" required></textarea>
+
+            <label for="objetivos">Objetivos e Expectativas:</label>
+            <textarea id="objetivos" name="objetivos" rows="4" cols="50" required></textarea>
+        </div>
+
+        <!-- Adicione mais módulos conforme necessário -->
+
+        <!-- Adição do input de arquivo -->
+        <label for="fileInput">Carregar Arquivo HTML:</label>
+        <input type="file" id="fileInput" accept=".html" onchange="carregarArquivo(this)">
+
+        <button type="button" onclick="mostrarCurso()">Enviar</button>
+    </form>
+
+    <div class="curso" id="cursoInfo" style="display: none;">
+        <!-- As informações do curso serão exibidas aqui -->
+    </div>
+
+    <script>
+        function mostrarCurso() {
+            // Armazena as informações no localStorage
+            localStorage.setItem('apresentacao', document.getElementById('apresentacao').value);
+            localStorage.setItem('objetivos', document.getElementById('objetivos').value);
+        }
+    
+        function exibirInformacoesCurso() {
+            // Recupera as informações do localStorage
+            const apresentacao = localStorage.getItem('apresentacao');
+            const objetivos = localStorage.getItem('objetivos');
+            const conteudoArquivo = localStorage.getItem('conteudoArquivo') || 'Nenhum arquivo carregado';
+    
+            // Exibe as informações na div 'cursoInfo'
+            const cursoInfo = document.getElementById('cursoInfo');
+            cursoInfo.innerHTML = `
+                <h2>Módulo 1: Introdução</h2>
+                <p>Apresentação do Curso: ${apresentacao}</p>
+                <p>Objetivos e Expectativas: ${objetivos}</p>
+                <h2>Conteúdo do Arquivo HTML</h2>
+                <pre>${conteudoArquivo}</pre>
+            `;
+    
+            // Exibe a div 'cursoInfo'
+            cursoInfo.style.display = 'block';
+        }
+    
+        // Função para carregar o conteúdo do arquivo
+        function carregarArquivo(input) {
+            const file = input.files[0];
+    
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const fileContent = e.target.result;
+    
+                    // Armazena o conteúdo do arquivo no localStorage
+                    localStorage.setItem('conteudoArquivo', fileContent);
+    
+                    // Chama a função para exibir as informações
+                    exibirInformacoesCurso();
+                };
+    
+                reader.readAsText(file);
+            }
+        }
+    </script>
+    
+    
+</body>
+</html>
